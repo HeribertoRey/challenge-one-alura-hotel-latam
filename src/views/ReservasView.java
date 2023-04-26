@@ -11,10 +11,14 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import controller.ReservaController;
+
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.text.Format;
+import java.time.LocalDate;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -37,6 +41,9 @@ public class ReservasView extends JFrame {
 	int xMouse, yMouse;
 	private JLabel labelExit;
 	private JLabel labelAtras;
+	
+	private ReservaController reservaController;
+	
 
 	/**
 	 * Launch the application.
@@ -309,10 +316,15 @@ public class ReservasView extends JFrame {
 		btnsiguiente.setBounds(238, 493, 122, 35);
 		panel.add(btnsiguiente);
 		btnsiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-
-	}
+		}
 		
+	private void guardarReserva() {
+		if(txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null && !txtValor.equals("") 
+				&& !txtFormaPago.getSelectedItem().toString().equals("")) {
+			LocalDate dateE = LocalDate.parse(((JTextField)txtFechaEntrada.getDateEditor().getUiComponent().getText());
+		}
+	}
+	
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
 	        xMouse = evt.getX();

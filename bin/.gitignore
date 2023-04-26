@@ -1,7 +1,4 @@
 /views/
 /modelo/
-/ConectionFactory/
-/ConnectionFactory/
-/test/
-/controladores/
+/DAO/
 /controller/
