@@ -21,6 +21,19 @@ public class Reserva {
 	}
 	
 	
+	
+
+	public Reserva(Integer id, LocalDate dateE, LocalDate dateS, String valor, String formaPago) {
+		super();
+		this.id = id;
+		this.dateE = dateE;
+		this.dateS = dateS;
+		this.valor = valor;
+		this.formaPago = formaPago;
+	}
+
+
+
 
 	public Integer getId() {
 		return id;

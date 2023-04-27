@@ -336,7 +336,7 @@ public class ReservasView extends JFrame {
 			reservaController.guardar(reserva);
 			
 			
-			RegistroHuesped registro = new RegistroHuesped();
+			RegistroHuesped registro = new RegistroHuesped(reserva.getId());
 			registro.setVisible(true);
 			dispose();
 		}else {
@@ -355,7 +355,7 @@ public class ReservasView extends JFrame {
 			Calendar inicio = dateE.getCalendar();
 			Calendar fin = dateS.getCalendar();
 			int dias = -1; //para que cuente desde el dia siguiente
-			int noche = 80;
+			int noche = 40;
 			int valor;
 			
 			while (inicio.before(fin)|| inicio.equals(fin)) {
@@ -364,7 +364,7 @@ public class ReservasView extends JFrame {
 			}
 			valor = dias * noche;
 			System.out.println(valor);
-			txtValor.setText(" $:" + valor);
+			txtValor.setText("$ "+ valor);
 		}
 	}
 	

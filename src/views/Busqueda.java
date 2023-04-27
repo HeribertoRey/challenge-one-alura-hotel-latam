@@ -6,6 +6,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import controller.HuespedesController;
+import controller.ReservaController;
+import modelo.Reserva;
+
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -20,6 +25,7 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
@@ -33,6 +39,14 @@ public class Busqueda extends JFrame {
 	private JLabel labelAtras;
 	private JLabel labelExit;
 	int xMouse, yMouse;
+	
+	
+	private ReservaController reservasController;
+	private HuespedesController huespedesController;
+	private ReservasView reservasView;
+	String reserva;
+	String huespedes;
+	
 
 	/**
 	 * Launch the application.
@@ -54,6 +68,11 @@ public class Busqueda extends JFrame {
 	 * Create the frame.
 	 */
 	public Busqueda() {
+		
+		this.huespedesController = new HuespedesController();
+		this.reservasController = new ReservaController();
+		this.reservasView = new ReservasView();
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Busqueda.class.getResource("/imagenes/lupa2.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 571);
@@ -96,6 +115,7 @@ public class Busqueda extends JFrame {
 		modelo.addColumn("Fecha Check Out");
 		modelo.addColumn("Valor");
 		modelo.addColumn("Forma de Pago");
+		mostrarTablaReserva();
 		JScrollPane scroll_table = new JScrollPane(tbReservas);
 		panel.addTab("Reservas", new ImageIcon(Busqueda.class.getResource("/imagenes/reservado.png")), scroll_table, null);
 		scroll_table.setVisible(true);
@@ -211,7 +231,12 @@ public class Busqueda extends JFrame {
 		btnbuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				limpiarTabla();
+				if (txtBuscar.getText().equals("")) {
+					mostrarTablaReserva();
+				}else {
+					mostrarTablaReservaId();
+				}
 			}
 		});
 		btnbuscar.setLayout(null);
@@ -256,6 +281,54 @@ public class Busqueda extends JFrame {
 		btnEliminar.add(lblEliminar);
 		setResizable(false);
 	}
+	
+	
+	private List<Reserva> buscarIdReserva(){
+		return this.reservasController.buscar(txtBuscar.getText());
+	}
+	
+	
+	private List<Reserva> MostrarReservas(){
+		return this.reservasController.mostrar();
+	}
+	
+	
+	
+	private void mostrarTablaReserva() {
+		List<Reserva> reserva = MostrarReservas();
+		modelo.setRowCount(0);
+		try {
+			for (Reserva reservas : reserva) {
+				modelo.addRow(new Object[]{
+					reservas.getId(), reservas.getDateE(),reservas.getDateS(),reservas.getValor(),reservas.getFormaPago()
+						});
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	
+	private void mostrarTablaReservaId() {
+		List<Reserva> reserva = buscarIdReserva();
+		try {
+			for (Reserva reservas : reserva) {
+				modelo.addRow(new Object[]{
+					reservas.getId(), reservas.getDateE(),reservas.getDateS(),reservas.getValor(),reservas.getFormaPago()
+						});
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	
+	private void limpiarTabla() {
+		((DefaultTableModel)tbHuespedes.getModel()).setRowCount(0);
+		((DefaultTableModel)tbReservas.getModel()).setRowCount(0);
+		
+	}
+	
 	
 //Código que permite mover la ventana por la pantalla según la posición de "x" y "y"
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
