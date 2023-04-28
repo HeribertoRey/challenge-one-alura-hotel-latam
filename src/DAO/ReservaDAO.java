@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
 
 import modelo.Reserva;
 
@@ -87,16 +87,31 @@ public class ReservaDAO {
 	
 	public void Actualizar( LocalDate dateE, LocalDate dateS, String valor, String formaPago, Integer id){
 		
-		try(PreparedStatement pstm = con.prepareStatement("UPDATE RESERVAS SET"
+		try(PreparedStatement pstm = con.prepareStatement("UPDATE RESERVAS SET "
 				+ "FECHA_ENTRADA=?, FECHA_SALIDA=?, VALOR=?, FORMA_DE_PAGO=? WHERE ID=?")){
-			pstm.setObject(1, dateE);
-			pstm.setObject(2, dateS);
+			pstm.setObject(1, java.sql.Date.valueOf(dateE));
+			pstm.setObject(2,java.sql.Date.valueOf(dateS));
 			pstm.setString(3, valor);
 			pstm.setString(4, formaPago);
 			pstm.setInt(5, id);
 			pstm.execute();
 		}catch(SQLException e){
 			throw new RuntimeException();
+		}
+	}
+	
+	
+	
+	public void Eliminar(Integer id) {
+		try {
+			Statement state = con.createStatement();
+			state.execute("SET FOREIGN_KEY_CHECKS=0");
+			PreparedStatement pstm = con.prepareStatement("DELETE FROM RESERVAS WHERE ID = ?");
+			pstm.setInt(1, id);
+			pstm.execute();
+			state.execute("SET FOREIGN_KEY_CHECKS=1");
+		}catch(SQLException e){
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -108,7 +123,7 @@ public class ReservaDAO {
 			while(rst.next()) {
 				int id = rst.getInt("id");
 				LocalDate fechaE = rst.getDate("fecha_entrada").toLocalDate().plusDays(1);
-				LocalDate fechaS = rst.getDate("fecha_salida").toLocalDate().plusDays(1);
+				LocalDate fechaS = rst.getDate("fecha_salida").toLocalDate().plusDays(2);
 				String valor = rst.getString("valor");
 				String formaPago = rst.getString("forma_de_pago");
 				

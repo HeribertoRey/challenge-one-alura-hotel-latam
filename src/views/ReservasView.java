@@ -368,6 +368,14 @@ public class ReservasView extends JFrame {
 		}
 	}
 	
+	//esto es para cuando actualizemos las fechas de la tabla, se limpie el valor
+	
+	
+	public void limpiarValor() {
+		txtValor.setText("");
+	}
+	
+	
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
 	        xMouse = evt.getX();

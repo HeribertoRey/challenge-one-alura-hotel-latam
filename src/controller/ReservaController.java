@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.List;
 
 import ConnectionFactory.ConnectionBase;
@@ -30,5 +31,12 @@ public class ReservaController {
 		return this.reservaD.buscarId(id);
 	}
 	
-	public void actua
+	public void actualizarReserva(LocalDate dateE, LocalDate dateS, String valor, String formaPago, Integer id) {
+		this.reservaD.Actualizar(dateE, dateS, valor, formaPago, id);
+	}
+	
+	public void Eliminar (Integer id) {
+		this.reservaD.Eliminar(id);
+	}
+	
 }
