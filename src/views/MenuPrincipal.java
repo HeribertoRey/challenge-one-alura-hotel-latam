@@ -63,11 +63,11 @@ public class MenuPrincipal extends JFrame {
 		
 		JLabel imagenFondo = new JLabel("");
 		imagenFondo.setBounds(-50, 0, 732, 501);
-		imagenFondo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/menu-img.png")));
+		imagenFondo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/8316286.jpg")));
 		panel.add(imagenFondo);
 		
 		JLabel logo = new JLabel("");
-		logo.setBounds(722, 80, 150, 156);
+		logo.setBounds(722, 47, 150, 156);
 		logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/aH-150px.png")));
 		panel.add(logo);
 		
@@ -77,7 +77,7 @@ public class MenuPrincipal extends JFrame {
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblCopyR = new JLabel("Desarrollado por Fulanita de Tal © 2023");
+		JLabel lblCopyR = new JLabel("Desarrollado por Daniel Reyes © 2023");
 		lblCopyR.setBounds(315, 11, 284, 19);
 		lblCopyR.setForeground(new Color(240, 248, 255));
 		lblCopyR.setFont(new Font("Roboto", Font.PLAIN, 16));
@@ -135,7 +135,7 @@ public class MenuPrincipal extends JFrame {
 		
 		//Botón Login
 		JPanel btnLogin = new JPanel(); 
-		btnLogin.setBounds(754, 300, 83, 70);
+		btnLogin.setBounds(722, 249, 150, 156);
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -150,18 +150,19 @@ public class MenuPrincipal extends JFrame {
 		panel.add(btnLogin);
 		
 		JLabel imagenLogin = new JLabel("");
-		imagenLogin.setBounds(0, 0, 80, 70);
+		imagenLogin.setBounds(0, 0, 150, 156);
 		btnLogin.add(imagenLogin);
+		imagenLogin.setLabelFor(btnLogin);
 		imagenLogin.setHorizontalAlignment(SwingConstants.CENTER);
-		imagenLogin.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/login.png")));
+		imagenLogin.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/imagenes/logo de entrara.png")));
 		
 		JLabel lblTitulo = new JLabel("LOGIN");
-		lblTitulo.setBounds(754, 265, 83, 24);
+		lblTitulo.setBounds(759, 214, 83, 24);
 		lblTitulo.setBackground(SystemColor.window);
 		panel.add(lblTitulo);
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitulo.setForeground(SystemColor.textHighlight);
-		lblTitulo.setFont(new Font("Roboto Light", Font.PLAIN, 20));
+		lblTitulo.setFont(new Font("Dialog", Font.BOLD, 20));
 	}
 	
 	//Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"	
