@@ -5,7 +5,6 @@
 </p>
 
 ---
-##  Primeros Pasos:
 
 
 #### 🔹 Marca este proyecto con una ⭐
