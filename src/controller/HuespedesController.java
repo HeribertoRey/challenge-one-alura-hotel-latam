@@ -31,9 +31,9 @@ public class HuespedesController {
 		return this.huespedesDao.bucarId(id);
 	}
 	
-	public void actualizarH(Integer id, String nombre, String apellido, LocalDate fechaNacimiento, String nacionalidad,
-			String telefono, Integer idReserva) {
-		this.huespedesDao.ActualizaHuespedes(id, nombre, apellido, fechaNacimiento, nacionalidad, telefono, idReserva);
+	public void actualizarH(String nombre, String apellido, LocalDate fechaNacimiento, String nacionalidad, String telefono,
+			Integer idReserva, Integer id) {
+		this.huespedesDao.ActualizaH( nombre, apellido, fechaNacimiento, nacionalidad, telefono, idReserva,id);
 	}
 	
 	public void Eliminar(Integer idReserva) {

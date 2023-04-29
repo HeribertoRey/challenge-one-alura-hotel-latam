@@ -27,9 +27,7 @@ import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
-import java.sql.Date;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -128,7 +126,7 @@ public class Busqueda extends JFrame {
 
 		tbHuespedes = new JTable();
 		tbHuespedes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tbHuespedes.setFont(new Font("Roboto", Font.PLAIN, 16));
+		tbHuespedes.setFont(new Font("Robo to", Font.PLAIN, 16));
 		modeloHuesped = (DefaultTableModel) tbHuespedes.getModel();
 		modeloHuesped.addColumn("Número de Huesped");
 		modeloHuesped.addColumn("Nombre");
@@ -249,7 +247,7 @@ public class Busqueda extends JFrame {
 					MostrarTablaHuespedes();
 				} else {
 					mostrarTablaReservaId();
-					MostrarTablaHuespedes();
+					MostrarTablaHuespedesId();
 				}
 			}
 		});
@@ -270,9 +268,16 @@ public class Busqueda extends JFrame {
 		btnEditar.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int filaReservas = tbReservas.getSelectedRow();
+				int filaHuespedes = tbHuespedes.getSelectedRowCount();
 				if(filaReservas >= 0) {
 					ActualizarReservas();
 					limpiarTabla();
+					mostrarTablaReserva();
+					MostrarTablaHuespedes();
+				}else if(filaHuespedes >= 0) {
+					actualizarHuespedes();
+					limpiarTabla();
+					MostrarTablaHuespedes();
 					mostrarTablaReserva();
 				}
 			}
@@ -294,6 +299,7 @@ public class Busqueda extends JFrame {
 		btnEliminar.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int filaReservas = tbReservas.getSelectedRow();
+				int filaHuespedes = tbHuespedes.getSelectedRow();
 				
 				if(filaReservas >= 0) {
 					reserva = tbReservas.getValueAt(filaReservas, 0).toString();
@@ -305,6 +311,20 @@ public class Busqueda extends JFrame {
 						limpiarTabla();
 						mostrarTablaReserva();
 					}
+				}else if (filaHuespedes >= 0){
+					huespedes = tbHuespedes.getValueAt(filaHuespedes, 0).toString();
+					int confirmarH = JOptionPane.showConfirmDialog(null, "Desea borrar este Huespedes?");
+					
+					if(confirmarH == JOptionPane.YES_OPTION) {
+						String valor = tbHuespedes.getValueAt(filaHuespedes, 0).toString();
+						huespedesController.Eliminar(Integer.valueOf(valor));
+						JOptionPane.showInternalMessageDialog(contentPane, "Huesped Eliminado");
+						limpiarTabla();
+						MostrarTablaHuespedes();
+						mostrarTablaReserva();
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Hubo un errror al eliminar el registro");
 				}
 			}
 			
@@ -458,16 +478,23 @@ public class Busqueda extends JFrame {
 	private void actualizarHuespedes() {
 		Optional.ofNullable(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), tbHuespedes.getSelectedColumn()))
 		.ifPresentOrElse(filaHuespedes ->{
-			
+			 
 			String nombre = (String) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 1);
 			String apellido = (String) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 2);
-			Date fechaNacimiento = Date.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow() , 3).toString());
+			LocalDate fechaNacimiento = LocalDate.parse(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow() , 3).toString());
 			String nacionalidad = (String) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 4);
 			String telefono = (String) modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 5);
 			Integer id_reserva = Integer.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 6).toString());
+			Integer id = Integer.valueOf(modeloHuesped.getValueAt(tbHuespedes.getSelectedRow(), 0).toString());
 			
-			this.huespedesController.actualizarH(id_reserva, nombre, apellido, null, nacionalidad, telefono, id_reserva);
-			JOptionPane.showMessageDialog(this, String.format("Registro modificado con exito"));
+			if(tbHuespedes.getSelectedColumn() == 0 || tbHuespedes.getSelectedColumn() == 6) {
+				JOptionPane.showMessageDialog(this, "No se puede modificar los ID");
+			}else {
+				this.huespedesController.actualizarH(nombre, apellido, fechaNacimiento, nacionalidad, telefono,id_reserva, id);
+				JOptionPane.showMessageDialog(this, String.format("Registro modificado con exito"));
+			}
+			
+
 			
 		}, ()-> JOptionPane.showInternalMessageDialog(this, "Confirmar la seleccion"));
 	}

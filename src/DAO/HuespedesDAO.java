@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Huespedes;
-import modelo.Reserva;
 
 public class HuespedesDAO {
 	
@@ -64,7 +63,7 @@ public class HuespedesDAO {
 			}
 			return huespedes;
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -87,8 +86,8 @@ public class HuespedesDAO {
 	}  
 	
 	
-	public void ActualizaHuespedes(Integer id, String nombre, String apellido, LocalDate fechaNacimiento, String nacionalidad,
-			String telefono, Integer idReserva) {
+	public void ActualizaH(String nombre, String apellido, LocalDate fechaNacimiento, String nacionalidad, String telefono,
+			Integer idReserva, Integer id) {
 		try(PreparedStatement stm = con.prepareStatement(""
 				+ "UPDATE HUESPEDES SET NOMBRE=?, APELLIDO=?, FECHA_NACIMIENTO=?, NACIONALIDAD=?, "
 				+ "TELEFONO=?, ID_RESERVA=? WHERE ID=?")){
@@ -102,13 +101,13 @@ public class HuespedesDAO {
 			stm.execute();
 			
 		}catch(SQLException e) {
-			 throw new RuntimeException();
+			 throw new RuntimeException(e);
 		}
 	}
 	
 	
 	public void Eliminar(Integer id) {
-		try(PreparedStatement stm = con.prepareStatement("DELETE FROM HUESPEDES WHERE ID=?")){
+		try (PreparedStatement stm = con.prepareStatement("DELETE FROM HUESPEDES WHERE ID=?")){
 			stm.setInt(1, id);
 			stm.execute();
 		}catch(SQLException e) {
