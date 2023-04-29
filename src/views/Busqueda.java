@@ -394,6 +394,7 @@ public class Busqueda extends JFrame {
 								dateFormat);
 
 					} catch (DateTimeException e) {
+						JOptionPane.showMessageDialog(this, "Verifique que la Fecha ingresada cumpla con el formato '1900-01-01'");
 						throw new RuntimeException(e);
 					}
 					this.reservasView.limpiarValor();
